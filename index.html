@@ -6,118 +6,163 @@
     <title>Adarsh Lodge - Saharsa</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com">
     <style>
-        :root { --blue: #1b263b; --teal: #00a896; --bg: #f0f3f7; }
+        :root { --blue: #1b263b; --teal: #00a896; --bg: #f0f3f7; --red: #e63946; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background: var(--bg); padding-bottom: 80px; }
+        body { background: var(--bg); padding-bottom: 100px; }
 
-        /* Header & Tabs (Careerwill Style) */
-        header { background: var(--blue); color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
-        .tabs { display: flex; background: white; overflow-x: auto; padding: 12px 5px; border-bottom: 1px solid #ddd; }
-        .tab { padding: 5px 20px; color: #666; font-weight: bold; white-space: nowrap; font-size: 14px; cursor: pointer; }
-        .tab.active { color: var(--blue); border-bottom: 3px solid var(--blue); }
+        /* Careerwill Style Header */
+        header { background: var(--blue); color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        .header-title { font-size: 19px; font-weight: bold; }
 
-        /* Hero Banner */
-        .hero-banner { background: linear-gradient(135deg, #1b263b, #415a77); margin: 15px; border-radius: 15px; padding: 20px; color: white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .banner-btn { background: var(--teal); color: white; border: none; padding: 8px 20px; border-radius: 5px; margin-top: 15px; font-weight: bold; }
+        /* Banner */
+        .hero-banner { background: linear-gradient(135deg, #1b263b, #415a77); margin: 15px; border-radius: 15px; padding: 20px; color: white; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .banner-tag { background: #ffbe0b; color: black; font-size: 10px; font-weight: bold; padding: 3px 10px; border-radius: 5px; display: inline-block; margin-bottom: 10px; }
 
-        /* Rooms & Mess Cards */
+        /* Content Area */
         .container { padding: 0 15px; }
-        .card { background: white; border-radius: 15px; margin-bottom: 15px; padding: 15px; position: relative; border-left: 6px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        .available-border { border-left-color: #28a745; }
-        .booked-border { border-left-color: #e63946; opacity: 0.8; }
-        .status-badge { position: absolute; top: 0; left: 15px; font-size: 10px; color: white; padding: 2px 8px; border-radius: 0 0 8px 8px; font-weight: bold; }
-        .available-bg { background: #28a745; }
-        .booked-bg { background: #e63946; }
+        .section-label { margin: 15px 5px 15px; font-weight: bold; color: #333; font-size: 18px; border-left: 5px solid var(--teal); padding-left: 12px; }
 
-        /* Gallery Section */
-        .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px; }
-        .gallery-img { width: 100%; height: 150px; object-fit: cover; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        /* Premium Course-Style Cards */
+        .item-card { background: white; border-radius: 15px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.06); position: relative; }
+        .status-line { height: 5px; width: 100%; }
+        .line-available { background: #28a745; }
+        .line-booked { background: var(--red); }
+        
+        .card-body { padding: 18px; }
+        .item-name { font-size: 18px; font-weight: bold; color: #111; margin-bottom: 8px; }
+        .item-desc { font-size: 13px; color: #666; margin-bottom: 15px; line-height: 1.4; display: flex; align-items: flex-start; gap: 8px; }
+        
+        .price-footer { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #f0f0f0; padding-top: 15px; }
+        .price-value { color: var(--teal); font-size: 20px; font-weight: bold; }
+        .price-unit { font-size: 12px; color: #999; font-weight: normal; }
 
-        /* Bottom Nav */
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 12px; border-top: 1px solid #eee; z-index: 1000; }
-        .nav-item { text-align: center; color: #888; font-size: 10px; flex: 1; }
+        .book-btn { background: #eef2ff; color: var(--blue); border: none; padding: 10px 22px; border-radius: 10px; font-weight: bold; font-size: 13px; transition: 0.3s; }
+        .book-btn:disabled { background: #f5f5f5; color: #ccc; cursor: not-allowed; }
+
+        /* Careerwill Bottom Nav */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #eee; z-index: 1000; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); }
+        .nav-item { text-align: center; color: #888; font-size: 11px; flex: 1; cursor: pointer; position: relative; transition: 0.3s; }
+        .nav-item i { font-size: 24px; display: block; margin-bottom: 5px; }
         .nav-item.active { color: var(--teal); }
-        .nav-item i { font-size: 22px; display: block; margin-bottom: 3px; }
+        .nav-item.active::before { content: ''; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); width: 35px; height: 4px; background: var(--teal); border-radius: 0 0 8px 8px; }
+
+        /* Gallery Grid */
+        .gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 10px 0; }
+        .gallery-img { width: 100%; height: 160px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body>
 
     <header>
-        <div><i class="fas fa-bars"></i> &nbsp; Adarsh Lodge</div>
+        <div class="header-title"><i class="fas fa-bars"></i> &nbsp; Adarsh Lodge</div>
         <div style="position: relative;"><i class="fas fa-bell"></i><span style="background:red; font-size:9px; padding:1px 4px; border-radius:50%; position:absolute; top:-5px; right:-5px;">9+</span></div>
     </header>
 
-    <div class="tabs">
-        <div class="tab active" id="t1" onclick="switchTab('Rooms', 't1')">Rooms</div>
-        <div class="tab" id="t2" onclick="switchTab('Mess', 't2')">Mess Menu</div>
-        <div class="tab" id="t3" onclick="switchTab('Gallery', 't3')">Photos</div>
-        <div class="tab">Location</div>
+    <div class="hero-banner">
+        <div class="banner-tag">STUDENT DISCOUNTS</div>
+        <h2>आदर्श लॉज सहरसा</h2>
+        <p>सहरसा का सबसे सुरक्षित स्टूडेंट लॉज</p>
     </div>
 
-    <div id="hero" class="hero-banner">
-        <div style="background:#ffbe0b; color:black; font-size:10px; font-weight:bold; padding:2px 8px; border-radius:4px; display:inline-block;">FOUNDATION 2026</div>
-        <h2 style="margin:10px 0;">आदर्श लॉज सहरसा</h2>
-        <p>एडमिशन ओपन: रहने + खाने की उत्तम व्यवस्था</p>
-        <button class="banner-btn" onclick="window.location.href='tel:919876543210'">अभी कॉल करें</button>
+    <div class="container">
+        <div id="section-label" class="section-label">उपलब्ध कमरे (Rooms)</div>
+        <div id="main-display">
+            <p style="text-align:center; padding:50px; color:#999;">डेटा लोड हो रहा है...</p>
+        </div>
     </div>
 
-    <div class="container" id="main-content">
-        <p style="text-align:center; padding:50px;">लोड हो रहा है...</p>
-    </div>
-
+    <!-- Careerwill Bottom Navigation -->
     <nav class="bottom-nav">
-        <div class="nav-item active"><i class="fas fa-home"></i>Home</div>
-        <div class="nav-item"><i class="fas fa-book"></i>Bookings</div>
-        <div class="nav-item"><i class="fas fa-download"></i>Receipt</div>
-        <div class="nav-item"><i class="fas fa-user-graduate"></i>Profile</div>
+        <div class="nav-item active" id="navRooms" onclick="switchSection('Rooms', 'navRooms')">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </div>
+        <div class="nav-item" id="navMess" onclick="switchSection('Mess', 'navMess')">
+            <i class="fas fa-utensils"></i>
+            <span>Mess</span>
+        </div>
+        <div class="nav-item" id="navPhotos" onclick="switchSection('Gallery', 'navPhotos')">
+            <i class="fas fa-images"></i>
+            <span>Photos</span>
+        </div>
+        <div class="nav-item" onclick="window.location.href='tel:919876543210'">
+            <i class="fas fa-headset"></i>
+            <span>Help</span>
+        </div>
     </nav>
 
     <script>
         const sheetURL = 'https://docs.google.com';
-        let allData = [];
+        let fullData = [];
 
-        async function load() {
+        async function init() {
             try {
                 const res = await fetch(sheetURL);
                 const text = await res.text();
                 const rows = text.split('\n').slice(1);
-                allData = rows.map(r => {
+                fullData = rows.map(r => {
                     const c = r.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(s => s.replace(/"/g, '').trim());
-                    return { name: c, info: c, price: c, status: c, cat: c };
+                    return { 
+                        name: c[0] || 'Unknown', 
+                        info: c[1] || 'No Details', 
+                        price: c[2] || '0', 
+                        status: (c[3] || 'available').toLowerCase(), 
+                        cat: (c[4] || 'Rooms').trim() 
+                    };
                 });
-                switchTab('Rooms', 't1');
-            } catch (e) { document.getElementById('main-content').innerHTML = "नेटवर्क एरर!"; }
+                switchSection('Rooms', 'navRooms');
+            } catch (e) { document.getElementById('main-display').innerHTML = "नेटवर्क एरर!"; }
         }
 
-        function switchTab(cat, tabId) {
-            const content = document.getElementById('main-content');
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
+        function switchSection(category, navId) {
+            const display = document.getElementById('main-display');
+            const label = document.getElementById('section-label');
             
-            if(cat === 'Gallery') {
-                content.innerHTML = `<div class="gallery-grid">
-                    <img class="gallery-img" src="https://images.unsplash.com">
-                    <img class="gallery-img" src="https://images.unsplash.com">
+            // नीचे के बटनों का रंग बदलें
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById(navId).classList.add('active');
+
+            if(category === 'Gallery') {
+                label.innerText = "लॉज की गैलरी";
+                display.innerHTML = `<div class="gallery-grid">
                     <img class="gallery-img" src="https://images.unsplash.com">
                     <img class="gallery-img" src="https://images.unsplash.com">
                 </div>`;
                 return;
             }
 
-            content.innerHTML = '';
-            const filtered = allData.filter(i => i.cat === cat);
+            label.innerText = category === 'Rooms' ? "उपलब्ध कमरे (Monthly)" : "मेस मासिक मेनू (Food)";
+            display.innerHTML = '';
+            
+            // डेटा को कैटेगरी के हिसाब से फिल्टर करें
+            const filtered = fullData.filter(i => i.cat === category);
+            
+            if(filtered.length === 0) {
+                display.innerHTML = `<p style="text-align:center; padding:50px; color:#999;">अभी इस सेक्शन में कोई डेटा नहीं है।</p>`;
+                return;
+            }
+
             filtered.forEach(i => {
-                const isAvail = i.status.toLowerCase() === 'available';
-                content.innerHTML += `<div class="card ${isAvail ? 'available-border' : 'booked-border'}">
-                    <div class="status-badge ${isAvail ? 'available-bg' : 'booked-bg'}">${isAvail ? 'खाली है' : 'फुल है'}</div>
-                    <h3 style="margin-top:10px;">${i.name}</h3>
-                    <p>${i.info}</p>
-                    <div style="color:var(--teal); font-weight:bold; font-size:18px;">₹${i.price}/Month</div>
-                    <button style="width:100%; padding:10px; margin-top:10px; border:none; border-radius:8px; background:#eef2ff; color:var(--blue); font-weight:bold;" ${!isAvail ? 'disabled' : ''} onclick="window.open('https://wa.me: ${i.name}')">WhatsApp पर बुक करें</button>
-                </div>`;
+                const isAvail = i.status.includes('available');
+                display.innerHTML += `
+                    <div class="item-card">
+                        <div class="status-line ${isAvail ? 'line-available' : 'line-booked'}"></div>
+                        <div class="card-body">
+                            <div class="item-name">${i.name}</div>
+                            <div class="item-desc"><i class="fas fa-info-circle"></i> ${i.info}</div>
+                            <div class="price-footer">
+                                <div class="price-value">₹${i.price}<span class="price-sub"> /महीना</span></div>
+                                <button class="book-btn" ${!isAvail ? 'disabled' : ''} 
+                                        onclick="window.open('https://wa.me्ते, मुझे ${i.name} की जानकारी चाहिए।')">
+                                    ${isAvail ? 'बुक करें' : 'Full'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>`;
             });
         }
-        load();
+        init();
     </script>
 </body>
 </html>
+
