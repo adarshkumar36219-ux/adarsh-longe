@@ -1,199 +1,138 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adarsh Lodge - Saharsa</title>
+    <title>आदर्श लॉज - सहरसा (Bihar)</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com">
     <style>
-        :root { --primary: #0d47a1; --bg: #f7f9fc; --text: #2c3e50; }
-        body { font-family: 'Segoe UI', Roboto, sans-serif; background: var(--bg); margin: 0; padding: 0; color: var(--text); }
+        :root { --primary: #1a237e; --secondary: #00a896; --bg: #f4f7f6; --white: #ffffff; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
+        body { background: var(--bg); padding-bottom: 80px; }
 
         /* Top Header */
-        .header { background: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 1000; }
-        .brand { font-size: 20px; font-weight: 800; color: var(--primary); letter-spacing: 0.5px; }
+        header { background: var(--primary); color: white; padding: 25px 15px; text-align: center; border-radius: 0 0 25px 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .logo-text { font-size: 22px; font-weight: bold; letter-spacing: 1px; }
+        .sub-text { font-size: 13px; opacity: 0.9; margin-top: 5px; }
 
-        /* App Icon Placeholder (AL Logo) */
-        .app-icon { width: 35px; height: 35px; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-weight: bold; font-size: 14px; }
+        /* Navigation Tabs (Careerwill Style) */
+        .nav-tabs { display: flex; background: var(--white); margin: 15px; border-radius: 12px; padding: 5px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); position: sticky; top: 10px; z-index: 100; }
+        .tab-btn { flex: 1; padding: 12px; border: none; background: none; font-weight: bold; color: #666; cursor: pointer; transition: 0.3s; border-radius: 8px; font-size: 15px; }
+        .tab-btn.active { background: var(--primary); color: white; box-shadow: 0 4px 10px rgba(26, 35, 126, 0.3); }
 
-        /* Navigation Tabs */
-        .tabs { display: flex; background: white; padding: 5px 15px; gap: 20px; overflow-x: auto; border-bottom: 1px solid #eee; scrollbar-width: none; }
-        .tab { padding: 10px 5px; color: #7f8c8d; font-weight: 600; white-space: nowrap; cursor: pointer; transition: 0.3s; }
-        .tab.active-tab { color: var(--primary); border-bottom: 3px solid var(--primary); }
+        /* Content Container */
+        .container { padding: 0 15px; }
+        .section-title { font-size: 16px; font-weight: bold; color: #444; margin: 10px 5px; }
 
-        /* Content Sections */
-        .section { display: none; padding: 15px; padding-bottom: 90px; }
-        .section.active-sec { display: block; animation: fadeIn 0.5s; }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        /* Aesthetic Cards (Careerwill Style) */
-        .banner-card { background: linear-gradient(135deg, #0d47a1, #1e88e5); border-radius: 20px; padding: 25px; color: white; margin-bottom: 20px; box-shadow: 0 10px 20px rgba(13, 71, 161, 0.2); }
+        /* Dynamic Cards */
+        .card { background: var(--white); border-radius: 15px; padding: 15px; margin-bottom: 20px; position: relative; overflow: hidden; border-left: 6px solid #ddd; box-shadow: 0 4px 12px rgba(0,0,0,0.06); transition: 0.3s; }
+        .card.available { border-left-color: #28a745; }
+        .card.booked { border-left-color: #dc3545; opacity: 0.8; }
         
-        .main-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; border: 1px solid #f0f0f0; }
-        .card-image { width: 100%; height: 160px; background: #e0e0e0; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #999; }
-        .card-info { padding: 15px; }
-        .price-row { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
-        .new-price { color: #d32f2f; font-size: 20px; font-weight: bold; }
-        .old-price { text-decoration: line-through; color: #95a5a6; font-size: 14px; }
+        .status-badge { position: absolute; top: 0; right: 0; padding: 4px 12px; font-size: 10px; font-weight: bold; color: white; border-radius: 0 0 0 12px; }
+        .available-bg { background: #28a745; }
+        .booked-bg { background: #dc3545; }
 
-        /* Premium Buttons */
-        .btn-row { display: flex; gap: 12px; margin-top: 15px; }
-        .btn { flex: 1; padding: 12px; border-radius: 10px; text-decoration: none; font-weight: 700; text-align: center; font-size: 14px; transition: 0.2s; }
-        .btn-fill { background: var(--primary); color: white; }
-        .btn-outline { border: 1.5px solid var(--primary); color: var(--primary); }
+        .card-body h3 { font-size: 18px; color: #111; margin-bottom: 8px; }
+        .card-body p { font-size: 13px; color: #666; line-height: 1.5; margin-bottom: 12px; }
+        .price-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 15px; }
+        .main-price { font-size: 20px; font-weight: bold; color: var(--secondary); }
+        .month-tag { font-size: 12px; color: #999; }
 
-        /* Reels Player */
-        #reels-section { padding: 0; background: #000; height: 100vh; position: relative; }
-        .reel-vid { width: 100%; height: 100%; object-fit: cover; }
-        .reel-txt { position: absolute; bottom: 110px; left: 20px; color: white; text-shadow: 2px 2px 10px rgba(0,0,0,0.8); }
+        /* Action Buttons */
+        .btn-group { display: flex; gap: 10px; }
+        .btn { flex: 1; padding: 10px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 14px; transition: 0.2s; }
+        .btn-wa { background: #25d366; color: white; }
+        .btn-call { background: #007bff; color: white; }
+        .btn:disabled { background: #eee; color: #999; cursor: not-allowed; }
 
-        /* Bottom Bar */
-        .bottom-bar { position: fixed; bottom: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #eee; z-index: 2000; }
-        .nav-item { text-align: center; font-size: 11px; color: #95a5a6; cursor: pointer; flex: 1; }
-        .nav-item.active-nav { color: var(--primary); font-weight: bold; }
-        .nav-icon { font-size: 20px; display: block; margin-bottom: 2px; }
+        /* Loading Spinner */
+        #loader { text-align: center; padding: 50px; font-weight: bold; color: var(--primary); }
     </style>
 </head>
 <body>
 
-    <!-- Top Header -->
-    <div class="header" id="main-header">
-        <div style="display: flex; align-items: center; gap: 10px;">
-            <div class="app-icon">AL</div>
-            <div class="brand">ADARSH LODGE</div>
-        </div>
-        <div style="font-size: 22px;">🔔</div>
+    <header>
+        <div class="logo-text">🏨 ADARSH LODGE</div>
+        <div class="sub-text"><i class="fas fa-map-marker-alt"></i> सहरसा, बिहार (समीप रेलवे स्टेशन)</div>
+    </header>
+
+    <div class="nav-tabs">
+        <button class="tab-btn active" onclick="switchTab('Rooms', this)">Rooms (कमरे)</button>
+        <button class="tab-btn" onclick="switchTab('Mess', this)">Mess (मेस)</button>
     </div>
 
-    <!-- Category Tabs -->
-    <div class="tabs" id="main-tabs">
-        <div class="tab active-tab" onclick="changePage('home', this)">Home</div>
-        <div class="tab" onclick="changePage('lodge', this)">Rooms</div>
-        <div class="tab" onclick="changePage('mess', this)">Mess Plan</div>
-        <div class="tab" onclick="changePage('help', this)">Helpdesk</div>
-    </div>
-
-    <!-- 1. HOME SECTION -->
-    <div id="home-section" class="section active-sec">
-        <div class="banner-card">
-            <h2 style="margin:0;">Adarsh Lodge</h2>
-            <p style="margin:5px 0 15px; font-size: 14px; opacity: 0.9;">पंचवटी चौक, सहरसा</p>
-            <div style="background: rgba(255,255,255,0.2); padding: 8px; border-radius: 8px; font-size: 12px; display: inline-block;">
-                📢 न्यू एडमिशन ओपन (2026)
-            </div>
-        </div>
-
-        <div class="main-card">
-            <div class="card-image">Lodge Main Entrance View</div>
-            <div class="card-info">
-                <h3 style="margin:0;">प्रीमियम छात्र आवास</h3>
-                <p style="font-size: 12px; color: #7f8c8d;">Wi-Fi, RO वाटर, और सुरक्षा के साथ</p>
-                <div class="price-row">
-                    <span class="old-price">₹4500</span>
-                    <span class="new-price">₹3499/-</span>
-                </div>
-                <div class="btn-row">
-                    <a href="#" class="btn btn-outline" onclick="changePage('lodge')">Explore</a>
-                    <a href="#" class="btn btn-fill" onclick="alert('बुकिंग शुरू!')">Book Now</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 2. LODGE SECTION -->
-    <div id="lodge-section" class="section">
-        <h3 style="margin-bottom: 15px;">उपलब्ध रूम लिस्ट (Saharsa)</h3>
-        <div id="room-container">
-            <!-- JS will load rooms here -->
-        </div>
-    </div>
-
-    <!-- 3. MESS SECTION -->
-    <div id="mess-section" class="section">
-        <div class="main-card">
-            <div class="card-image" style="background: #e8f5e9;">Healthy Food Menu</div>
-            <div class="card-info">
-                <h3 style="margin:0;">मंथली मेस सुविधा</h3>
-                <p style="font-size: 12px; color: #7f8c8d;">संडे स्पेशल चिकन/पनीर के साथ</p>
-                <div class="price-row">
-                    <span class="old-price">₹3500</span>
-                    <span class="new-price">₹2800/-</span>
-                </div>
-                <div class="btn-row">
-                    <a href="#" class="btn btn-fill">मेन्यू डाउनलोड करें</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 4. REELS SECTION -->
-    <div id="reels-section" class="section">
-        <video class="reel-vid" autoplay loop muted src="https://assets.mixkit.co"></video>
-        <div class="reel-txt">
-            <h3 style="margin:0;">@adarsh_lodge</h3>
-            <p>हमारे प्रीमियम रूम का नज़ारा! ✨ #Saharsa #Lodge</p>
-        </div>
-    </div>
-
-    <!-- Bottom Navigation -->
-    <div class="bottom-bar">
-        <div class="nav-item active-nav" onclick="changePage('home', null, this)">
-            <span class="nav-icon">🏠</span>Home
-        </div>
-        <div class="nav-item" onclick="changePage('lodge', null, this)">
-            <span class="nav-icon">🏨</span>Lodge
-        </div>
-        <div class="nav-item" onclick="changePage('reels', null, this)">
-            <span class="nav-icon">🎞️</span>Reels
-        </div>
-        <div class="nav-item" onclick="changePage('mess', null, this)">
-            <span class="nav-icon">🍱</span>Mess
-        </div>
+    <div class="container">
+        <div id="loader"><i class="fas fa-spinner fa-spin"></i> लोड हो रहा है...</div>
+        <div id="content-display"></div>
     </div>
 
     <script>
-        function changePage(pageId, tabEl, navEl) {
-            // Sections Change
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active-sec'));
-            document.getElementById(pageId + '-section').classList.add('active-sec');
+        // आपकी Google Sheet का लिंक (CSV फॉर्मेट में)
+        const sheetURL = 'https://docs.google.com';
+        let fullData = [];
 
-            // Header & Tabs visibility
-            const header = document.getElementById('main-header');
-            const tabs = document.getElementById('main-tabs');
-            if(pageId === 'reels') {
-                header.style.display = 'none';
-                tabs.style.display = 'none';
-            } else {
-                header.style.display = 'flex';
-                tabs.style.display = 'flex';
-            }
-
-            // Tab Highlight
-            if(tabEl) {
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active-tab'));
-                tabEl.classList.add('active-tab');
-            }
-
-            // Nav Highlight
-            if(navEl) {
-                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active-nav'));
-                navEl.classList.add('active-nav');
-            }
-
-            if(pageId === 'lodge') loadRooms();
-        }
-
-        function loadRooms() {
-            const container = document.getElementById('room-container');
-            container.innerHTML = "";
-            for (let i = 1; i <= 20; i++) {
-                container.innerHTML += `
-                    <div style="background:white; padding:15px; border-radius:12px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; border:1px solid #eee;">
-                        <div><span style="font-weight:bold; font-size:16px;">रूम नंबर: ${i}</span><br><small style="color:green;">उपलब्ध है</small></div>
-                        <a href="#" style="background:var(--primary); color:white; padding:8px 15px; border-radius:8px; text-decoration:none; font-size:12px; font-weight:bold;" onclick="alert('रूम ${i} बुकिंग के लिए संपर्क करें')">बुक करें</a>
-                    </div>
-                `;
+        async function initApp() {
+            try {
+                const res = await fetch(sheetURL);
+                const text = await res.text();
+                // डेटा को साफ़ करके एरे (Array) में बदलें
+                const rows = text.split('\n').slice(1);
+                fullData = rows.map(row => {
+                    const c = row.split(',').map(s => s.replace(/"/g, '').trim());
+                    return { name: c[0], info: c[1], price: c[2], status: c[3], cat: c[4] };
+                });
+                document.getElementById('loader').style.display = 'none';
+                render('Rooms');
+            } catch (err) {
+                document.getElementById('loader').innerHTML = "डेटा लोड नहीं हुआ! कृपया इंटरनेट चेक करें।";
             }
         }
+
+        function render(category) {
+            const display = document.getElementById('content-display');
+            display.innerHTML = `<h3 class="section-title">उपलब्ध ${category === 'Rooms' ? 'कमरे' : 'मेस प्लान'}</h3>`;
+            
+            const filtered = fullData.filter(item => item.cat === category);
+            
+            filtered.forEach(item => {
+                const isAvail = item.status.toLowerCase() === 'available';
+                const card = `
+                    <div class="card ${isAvail ? 'available' : 'booked'}">
+                        <div class="status-badge ${isAvail ? 'available-bg' : 'booked-bg'}">
+                            ${isAvail ? 'खाली है' : 'फुल है'}
+                        </div>
+                        <div class="card-body">
+                            <h3>${item.name}</h3>
+                            <p>${item.info}</p>
+                            <div class="price-row">
+                                <span class="main-price">₹${item.price}</span>
+                                <span class="month-tag">/महीना</span>
+                            </div>
+                            <div class="btn-group">
+                                <button class="btn btn-call" onclick="window.location.href='tel:919876543210'"><i class="fas fa-phone"></i> कॉल</button>
+                                <button class="btn btn-wa" ${!isAvail ? 'disabled' : ''} onclick="bookingWA('${item.name}')">
+                                    <i class="fab fa-whatsapp"></i> बुक करें
+                                </button>
+                            </div>
+                        </div>
+                    </div>`;
+                display.innerHTML += card;
+            });
+        }
+
+        function switchTab(cat, el) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+            render(cat);
+        }
+
+        function bookingWA(name) {
+            const text = encodeURIComponent(`नमस्ते आदर्श लॉज सहरसा, मुझे आपके यहाँ "${name}" के बारे में जानना है। क्या यह खाली है?`);
+            window.open(`https://wa.me{text}`, '_blank');
+        }
+
+        initApp();
     </script>
 </body>
 </html>
