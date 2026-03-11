@@ -6,163 +6,134 @@
     <title>Adarsh Lodge - Saharsa</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com">
     <style>
-        :root { --blue: #1b263b; --teal: #00a896; --bg: #f0f3f7; --red: #e63946; }
+        :root { --blue: #1b263b; --teal: #00a896; --bg: #f4f7f6; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background: var(--bg); padding-bottom: 100px; }
+        body { background: var(--bg); padding-bottom: 80px; }
 
-        /* Careerwill Style Header */
-        header { background: var(--blue); color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
-        .header-title { font-size: 19px; font-weight: bold; }
+        /* नीला हेडर */
+        header { background: var(--blue); color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
+        .header-left { font-size: 18px; font-weight: bold; }
 
-        /* Banner */
-        .hero-banner { background: linear-gradient(135deg, #1b263b, #415a77); margin: 15px; border-radius: 15px; padding: 20px; color: white; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .banner-tag { background: #ffbe0b; color: black; font-size: 10px; font-weight: bold; padding: 3px 10px; border-radius: 5px; display: inline-block; margin-bottom: 10px; }
+        /* ऊपर वाले टैब्स */
+        .top-tabs { display: flex; background: white; overflow-x: auto; padding: 10px 5px; border-bottom: 1px solid #ddd; }
+        .tab { padding: 8px 20px; color: #666; font-weight: bold; white-space: nowrap; font-size: 14px; cursor: pointer; }
+        .tab.active { color: var(--blue); border-bottom: 3px solid var(--blue); }
 
-        /* Content Area */
+        /* बड़ा बैनर */
+        .hero-banner { background: linear-gradient(135deg, #1b263b, #415a77); margin: 15px; border-radius: 15px; padding: 25px; color: white; position: relative; }
+        .banner-tag { background: #ffbe0b; color: black; font-size: 10px; font-weight: bold; padding: 3px 8px; border-radius: 5px; display: inline-block; margin-bottom: 10px; }
+        .hero-banner h2 { font-size: 22px; margin-bottom: 5px; }
+
+        /* कार्ड्स वाला डिज़ाइन */
         .container { padding: 0 15px; }
-        .section-label { margin: 15px 5px 15px; font-weight: bold; color: #333; font-size: 18px; border-left: 5px solid var(--teal); padding-left: 12px; }
-
-        /* Premium Course-Style Cards */
-        .item-card { background: white; border-radius: 15px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.06); position: relative; }
-        .status-line { height: 5px; width: 100%; }
-        .line-available { background: #28a745; }
-        .line-booked { background: var(--red); }
+        .card { background: white; border-radius: 12px; margin-bottom: 15px; padding: 15px; position: relative; border-left: 6px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .card.available { border-left-color: #28a745; }
+        .card.booked { border-left-color: #dc3545; opacity: 0.8; }
         
-        .card-body { padding: 18px; }
-        .item-name { font-size: 18px; font-weight: bold; color: #111; margin-bottom: 8px; }
-        .item-desc { font-size: 13px; color: #666; margin-bottom: 15px; line-height: 1.4; display: flex; align-items: flex-start; gap: 8px; }
-        
-        .price-footer { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #f0f0f0; padding-top: 15px; }
-        .price-value { color: var(--teal); font-size: 20px; font-weight: bold; }
-        .price-unit { font-size: 12px; color: #999; font-weight: normal; }
+        .status-badge { position: absolute; top: 10px; right: 10px; font-size: 10px; padding: 3px 10px; border-radius: 5px; color: white; font-weight: bold; text-transform: uppercase; }
+        .available-bg { background: #28a745; }
+        .booked-bg { background: #dc3545; }
 
-        .book-btn { background: #eef2ff; color: var(--blue); border: none; padding: 10px 22px; border-radius: 10px; font-weight: bold; font-size: 13px; transition: 0.3s; }
-        .book-btn:disabled { background: #f5f5f5; color: #ccc; cursor: not-allowed; }
+        h3 { font-size: 17px; color: #111; margin-bottom: 5px; }
+        p { font-size: 13px; color: #666; margin-bottom: 12px; }
+        .price { font-size: 20px; font-weight: bold; color: var(--teal); }
 
-        /* Careerwill Bottom Nav */
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #eee; z-index: 1000; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); }
-        .nav-item { text-align: center; color: #888; font-size: 11px; flex: 1; cursor: pointer; position: relative; transition: 0.3s; }
-        .nav-item i { font-size: 24px; display: block; margin-bottom: 5px; }
+        /* WhatsApp बटन */
+        .book-btn { width: 100%; background: #25d366; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; font-size: 14px; margin-top: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .book-btn:disabled { background: #ccc; cursor: not-allowed; }
+
+        /* नीचे वाली पट्टी (Bottom Nav) */
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #eee; z-index: 1000; }
+        .nav-item { text-align: center; color: #888; font-size: 10px; flex: 1; }
+        .nav-item i { font-size: 22px; display: block; margin-bottom: 3px; }
         .nav-item.active { color: var(--teal); }
-        .nav-item.active::before { content: ''; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); width: 35px; height: 4px; background: var(--teal); border-radius: 0 0 8px 8px; }
-
-        /* Gallery Grid */
-        .gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 10px 0; }
-        .gallery-img { width: 100%; height: 160px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="header-title"><i class="fas fa-bars"></i> &nbsp; Adarsh Lodge</div>
+        <div class="header-left"><i class="fas fa-bars"></i> &nbsp; आदर्श लॉज सहरसा</div>
         <div style="position: relative;"><i class="fas fa-bell"></i><span style="background:red; font-size:9px; padding:1px 4px; border-radius:50%; position:absolute; top:-5px; right:-5px;">9+</span></div>
     </header>
 
+    <div class="top-tabs">
+        <div class="tab active" id="btnRooms" onclick="showData('Rooms', 'btnRooms')">Rooms</div>
+        <div class="tab" id="btnMess" onclick="showData('Mess', 'btnMess')">Mess</div>
+        <div class="tab">Gallery</div>
+    </div>
+
     <div class="hero-banner">
-        <div class="banner-tag">STUDENT DISCOUNTS</div>
-        <h2>आदर्श लॉज सहरसा</h2>
-        <p>सहरसा का सबसे सुरक्षित स्टूडेंट लॉज</p>
+        <div class="banner-tag">STUDENT SPECIAL 2026</div>
+        <h2>आदर्श लॉज (Adarsh Lodge)</h2>
+        <p>सहरसा का नंबर 1 स्टूडेंट लॉज</p>
     </div>
 
-    <div class="container">
-        <div id="section-label" class="section-label">उपलब्ध कमरे (Rooms)</div>
-        <div id="main-display">
-            <p style="text-align:center; padding:50px; color:#999;">डेटा लोड हो रहा है...</p>
-        </div>
+    <div class="container" id="main-content">
+        <p style="text-align:center; padding-top:50px; color:#999;">लोड हो रहा है...</p>
     </div>
 
-    <!-- Careerwill Bottom Navigation -->
     <nav class="bottom-nav">
-        <div class="nav-item active" id="navRooms" onclick="switchSection('Rooms', 'navRooms')">
-            <i class="fas fa-home"></i>
-            <span>Home</span>
-        </div>
-        <div class="nav-item" id="navMess" onclick="switchSection('Mess', 'navMess')">
-            <i class="fas fa-utensils"></i>
-            <span>Mess</span>
-        </div>
-        <div class="nav-item" id="navPhotos" onclick="switchSection('Gallery', 'navPhotos')">
-            <i class="fas fa-images"></i>
-            <span>Photos</span>
-        </div>
-        <div class="nav-item" onclick="window.location.href='tel:919876543210'">
-            <i class="fas fa-headset"></i>
-            <span>Help</span>
-        </div>
+        <div class="nav-item active"><i class="fas fa-home"></i>Home</div>
+        <div class="nav-item"><i class="fas fa-book"></i>My Batch</div>
+        <div class="nav-item" onclick="window.location.href='tel:919876543210'"><i class="fas fa-phone-alt"></i>Help</div>
+        <div class="nav-item"><i class="fas fa-user"></i>Profile</div>
     </nav>
 
     <script>
         const sheetURL = 'https://docs.google.com';
-        let fullData = [];
+        let googleRows = [];
 
-        async function init() {
+        async function fetchSheet() {
             try {
-                const res = await fetch(sheetURL);
-                const text = await res.text();
-                const rows = text.split('\n').slice(1);
-                fullData = rows.map(r => {
-                    const c = r.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(s => s.replace(/"/g, '').trim());
+                const response = await fetch(sheetURL);
+                const csvData = await response.text();
+                const rows = csvData.split('\n').map(row => row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/));
+                
+                googleRows = rows.slice(1).map(c => {
                     return { 
-                        name: c[0] || 'Unknown', 
-                        info: c[1] || 'No Details', 
-                        price: c[2] || '0', 
-                        status: (c[3] || 'available').toLowerCase(), 
-                        cat: (c[4] || 'Rooms').trim() 
+                        name: (c[0] || '').replace(/"/g, '').trim(), 
+                        info: (c[1] || '').replace(/"/g, '').trim(), 
+                        price: (c[2] || '').replace(/"/g, '').trim(), 
+                        status: (c[3] || '').replace(/"/g, '').trim().toLowerCase(), 
+                        cat: (c[4] || '').replace(/"/g, '').trim() 
                     };
                 });
-                switchSection('Rooms', 'navRooms');
-            } catch (e) { document.getElementById('main-display').innerHTML = "नेटवर्क एरर!"; }
+                showData('Rooms', 'btnRooms');
+            } catch (err) {
+                document.getElementById('main-content').innerHTML = "डेटा लोड नहीं हो पाया!";
+            }
         }
 
-        function switchSection(category, navId) {
-            const display = document.getElementById('main-display');
-            const label = document.getElementById('section-label');
+        function showData(category, btnId) {
+            const content = document.getElementById('main-content');
+            document.querySelectorAll('.tab').forEach(n => n.classList.remove('active'));
+            document.getElementById(btnId).classList.add('active');
             
-            // नीचे के बटनों का रंग बदलें
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.getElementById(navId).classList.add('active');
-
-            if(category === 'Gallery') {
-                label.innerText = "लॉज की गैलरी";
-                display.innerHTML = `<div class="gallery-grid">
-                    <img class="gallery-img" src="https://images.unsplash.com">
-                    <img class="gallery-img" src="https://images.unsplash.com">
-                </div>`;
-                return;
-            }
-
-            label.innerText = category === 'Rooms' ? "उपलब्ध कमरे (Monthly)" : "मेस मासिक मेनू (Food)";
-            display.innerHTML = '';
+            content.innerHTML = `<h3 style="margin:15px 5px; font-size:16px;">${category === 'Rooms' ? 'उपलब्ध कमरे' : 'मेस मेनू'}</h3>`;
             
-            // डेटा को कैटेगरी के हिसाब से फिल्टर करें
-            const filtered = fullData.filter(i => i.cat === category);
+            const filtered = googleRows.filter(i => i.cat.toLowerCase() === category.toLowerCase());
             
             if(filtered.length === 0) {
-                display.innerHTML = `<p style="text-align:center; padding:50px; color:#999;">अभी इस सेक्शन में कोई डेटा नहीं है।</p>`;
+                content.innerHTML += `<p style="text-align:center; padding:50px; color:#999;">कोई डेटा नहीं मिला।</p>`;
                 return;
             }
 
             filtered.forEach(i => {
                 const isAvail = i.status.includes('available');
-                display.innerHTML += `
-                    <div class="item-card">
-                        <div class="status-line ${isAvail ? 'line-available' : 'line-booked'}"></div>
-                        <div class="card-body">
-                            <div class="item-name">${i.name}</div>
-                            <div class="item-desc"><i class="fas fa-info-circle"></i> ${i.info}</div>
-                            <div class="price-footer">
-                                <div class="price-value">₹${i.price}<span class="price-sub"> /महीना</span></div>
-                                <button class="book-btn" ${!isAvail ? 'disabled' : ''} 
-                                        onclick="window.open('https://wa.me्ते, मुझे ${i.name} की जानकारी चाहिए।')">
-                                    ${isAvail ? 'बुक करें' : 'Full'}
-                                </button>
-                            </div>
-                        </div>
+                content.innerHTML += `
+                    <div class="card ${isAvail ? 'available' : 'booked'}">
+                        <div class="status-badge ${isAvail ? 'available-bg' : 'booked-bg'}">${isAvail ? 'खाली है' : 'फुल है'}</div>
+                        <h3>${i.name}</h3>
+                        <p>${i.info}</p>
+                        <div class="price">₹${i.price}/महीना</div>
+                        <button class="book-btn" ${!isAvail ? 'disabled' : ''} 
+                                onclick="window.open('https://wa.me्ते, मुझे ${i.name} बुक करना है।')">
+                            <i class="fab fa-whatsapp"></i> WhatsApp पर बुक करें
+                        </button>
                     </div>`;
             });
         }
-        init();
+        fetchSheet();
     </script>
 </body>
 </html>
-
